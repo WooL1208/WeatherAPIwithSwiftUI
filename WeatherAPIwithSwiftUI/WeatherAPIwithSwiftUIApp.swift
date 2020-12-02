@@ -11,7 +11,13 @@ import SwiftUI
 struct WeatherAPIwithSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(display: ViewData())
         }
+    }
+}
+
+struct WeatherAPIwithSwiftUIApp_Previews: PreviewProvider {
+    static var previews: some View {
+        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
     }
 }
