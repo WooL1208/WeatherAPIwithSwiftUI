@@ -6,10 +6,12 @@
 //
 
 import Foundation
-class DataSource{
-    func getWeatherData(completion: @escaping(ViewData?) -> Void ) {
+class DataSource {
+    
+    func getWeatherData(city: String, completion: @escaping(ViewData?) -> Void ) {
         var viewData = ViewData()
-        let jsonURLString =  "http://api.weatherstack.com/current?access_key=[my key]&query=[location]"
+        let key = ""
+        let jsonURLString =  "http://api.weatherstack.com/current?access_key=" + key + "&query=" + city
         // make URL
         
         let url = URL(string: jsonURLString)!
@@ -33,50 +35,4 @@ class DataSource{
             }
         }.resume()
     }
-}
-struct ViewData {
-    var getTemp = false
-    var city = "city"
-    var temperature = 0
-    var weatherDescription = "Clear"
-}
-// MAKE STRUCT VARIABLES OPTIONAL TO PREVENT CRASHING WHEN VARIABLE IS EMPTY
-struct Weather : Decodable {
-    let request : Request?
-    let location : Location?
-    let current : Current?
-}
-struct Current : Decodable {
-    let observation_time : String?
-    let temperature : Int?
-    let weather_code : Int?
-    let weather_icons : [String?]
-    let weather_descriptions : [String?]
-    let wind_speed : Int?
-    let wind_degree : Int?
-    let wind_dir : String?
-    let pressure : Int?
-    let precip : Double?
-    let humidity : Int?
-    let cloudcover : Int?
-    let feelslike : Int?
-    let uv_index : Int?
-    let visibility : Int?
-}
-struct Location : Decodable {
-    let name : String?
-    let country : String?
-    let region : String?
-    let lat : String?
-    let lon : String?
-    let timezone_id : String?
-    let localtime : String?
-    let localtime_epoch : Int?
-    let utc_offset : String?
-}
-struct Request : Decodable {
-    let type : String?
-    let query : String?
-    let language : String?
-    let unit : String?
 }

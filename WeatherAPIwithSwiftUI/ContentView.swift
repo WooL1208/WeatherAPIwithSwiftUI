@@ -12,26 +12,26 @@ struct ContentView: View {
     let icon = [
     "Clear": "moon.stars.fill",
     "Sunny": "sun.max.fill",
-    "Partly cloudy Moon": "cloud.moon.fill",
-    "Partly cloudy": "cloud.sun.fill",
+    "Partly Cloudy Moon": "cloud.moon.fill",
+    "Partly Cloudy": "cloud.sun.fill",
     "Cloudy": "cloud.fill",
     "Overcast": "smoke.fill",
     "Mist": "cloud.fog.fill",
-    "Patchy rain possible": "cloud.drizzle.fill",
-    "Patchy snow possible": "cloud.hail.fill",
-    "Patchy sleet possible": "cloud.sleet.fill",
-    "Patchy freezing drizzle possible": "cloud.hail.fill",
-    "Thundery outbreaks possible": "cloud.bolt.rain.fill",
-    "Blowing snow": "cloud.snow.fill",
+    "Patchy Rain Possible": "cloud.drizzle.fill",
+    "Patchy Snow Possible": "cloud.hail.fill",
+    "Patchy Sleet Possible": "cloud.sleet.fill",
+    "Patchy Freezing Drizzle possible": "cloud.hail.fill",
+    "Thundery Outbreaks Possible": "cloud.bolt.rain.fill",
+    "Blowing Snow": "cloud.snow.fill",
     "Blizzard": "wind.snow",
     "Fog": "cloud.fog.fill",
-    "Freezing fog": "cloud.fog",
-    "Patchy light drizzle": "cloud.drizzle.fill",
-    "Light rain": "cloud.rain.fill",
-    "Moderate rain at times": "cloud.rain.fill",
-    "Heavy rain": "cloud.heavyrain.fill",
-    "Light freezing rain": "cloud.hail.fill",
-    "Heavy rain at times": "cloud.heavyrain.fill"
+    "Freezing Fog": "cloud.fog",
+    "Patchy Light Drizzle": "cloud.drizzle.fill",
+    "Light Rain": "cloud.rain.fill",
+    "Moderate Rain at Times": "cloud.rain.fill",
+    "Heavy Rain": "cloud.heavyrain.fill",
+    "Light Freezing Rain": "cloud.hail.fill",
+    "Heavy Rain at Times": "cloud.heavyrain.fill"
     ]
     
     //時間和格式
@@ -41,7 +41,7 @@ struct ContentView: View {
         return formatter
     }
     let dueDate = Date()
-    let dataSource = DataSource()
+    let event = Event()
     @State var display = ViewData()
     
     var body: some View {
@@ -59,8 +59,8 @@ struct ContentView: View {
                 }
             }
         }.onAppear() {
-            dataSource.getWeatherData { (viewData) in
-                display = viewData!
+            event.setCity(getCity: "Taipei") { (result) in
+                display = result!
             }
         }
     }
@@ -68,6 +68,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(display: ViewData())
+        ContentView(display: ViewData(getTemp: true, city: "Taipei", temperature: 20, weatherDescription: "Clear"))
     }
 }
