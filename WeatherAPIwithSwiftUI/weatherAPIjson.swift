@@ -47,3 +47,12 @@ struct Request : Decodable {
     let language : String?
     let unit : String?
 }
+struct WeatherError : Decodable {
+    let success : Bool?
+    let error : Error?
+}
+struct Error : Decodable{
+    let code : Int?
+    let type : String?
+    let info : String?
+}

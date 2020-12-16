@@ -8,7 +8,7 @@
 import Foundation
 class DataSource {
     
-    func getWeatherData(city: String, completion: @escaping(ViewData?) -> Void ) {
+    func getWeatherData(city: String, completion: @escaping(ViewData?, Bool) -> Void ) {
         var viewData = ViewData()
         let key = ""
         let jsonURLString =  "http://api.weatherstack.com/current?access_key=" + key + "&query=" + city
@@ -24,14 +24,22 @@ class DataSource {
             // check for 200 OK status
             guard let data = data else { return }
             do {
-                let weather = try JSONDecoder().decode(Weather.self, from: data)
-                viewData.city = weather.location?.name ?? ""
-                viewData.temperature = weather.current?.temperature ?? 0
-                viewData.weatherDescription = weather.current?.weather_descriptions[0] ?? ""
-                viewData.getTemp.toggle()
-                completion(viewData)
+                let error = try JSONDecoder().decode(WeatherError.self, from: data)
+                var isSuccess = true
+                if let _ = error.success {
+                    isSuccess = false
+                    completion(viewData, isSuccess)
+                } else {
+                    let weather = try JSONDecoder().decode(Weather.self, from: data)
+                    viewData.city = weather.location?.name ?? ""
+                    viewData.temperature = weather.current?.temperature ?? 0
+                    viewData.weatherDescription = weather.current?.weather_descriptions[0] ?? ""
+                    viewData.getTemp.toggle()
+                    completion(viewData, isSuccess)
+                }
             } catch let err {
                 print ("Json Err", err)
+                
             }
         }.resume()
     }

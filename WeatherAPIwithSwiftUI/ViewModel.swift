@@ -10,13 +10,12 @@ import Foundation
 class Event {
     let dataSource = DataSource()
     
-    func setCity(getCity:String, completion: @escaping(ViewData?) -> Void) {
-        dataSource.getWeatherData(city: getCity) { (viewData) in
-            var result = ViewData()
-            result = viewData!
-            completion(result)
+    func setCity(getCity:String, completion: @escaping(ViewData?, Bool) -> Void) {
+        dataSource.getWeatherData(city: getCity) { (viewData, isSuccess) in
+            completion(viewData, isSuccess)
         }
     }
+    
 }
 
 struct ViewData {
@@ -24,4 +23,5 @@ struct ViewData {
     var city = "city"
     var temperature = 0
     var weatherDescription = "Clear"
+    var success = true
 }
